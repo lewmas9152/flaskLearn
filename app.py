@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from markupsafe import escape
 
 app = Flask(__name__)
 
@@ -38,6 +39,16 @@ JOBS = [
 @app.route('/')
 def hello_world():
     return render_template('jobs.html', jobs=JOBS)
+
+@app.route('/api/<username>')
+def variableRoot(username):
+    return f"Hello from, {username}"
+
+@app.route('/api/<username>/<int:age>')
+def variableRoot2(username, age):
+    return f"Hello from, {username} and you are {age} years old"
+  
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
