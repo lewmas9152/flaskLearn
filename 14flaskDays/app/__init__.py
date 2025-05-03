@@ -1,16 +1,22 @@
-from flask import Flask, render_template
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "<h1>I am Samwel Njuguna and i am exicited to start this 14days learning challange</h1>"
+    return "<p>Hello</p>"
 
-@app.route("/about")
-def about():
-    return "<p>Hey, i  am a giy you can't exhaust info about in one sitting, why do't we grab  cup of tea and i will tell you all about sam</p>"
+@app.route("/form", methods= ["POST", "GET"])
+def form():
+    if request.method == "POST":
+        name = request.form.get('name')
+        email = request.form.get('email')
+        data = {
+            "name": name,
+            "email":email
+        }
+        return data
 
+    return render_template('base.html') 
+        
 
-@app.route("/intro/<name>")
-def intro(name):
-    return render_template("base.html", name = name)
